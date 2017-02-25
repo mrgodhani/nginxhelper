@@ -14,6 +14,7 @@ Assumes /etc/nginx/sites-available and /etc/nginx/sites-enabled setup used.
     -h    Help - Show this menu.
     -n    The Server Block file name - default: vagrant - i.e. -n yoursite
     -s    ServerName - i.e. -s yoursite.com
+    -r    Redirect 301 permanent to HTTPS - i,e -r (without any value)
 
 EOF
 exit 1
@@ -118,6 +119,12 @@ read -d '' PHP_WITH_SSL <<EOF
 EOF
     fi
 
+
+		if [[ $RedirectHttps -eq 1 ]]; then
+read -d '' REDIRECT_SSL <<EOF
+	return 301 https://$server_name$request_uri;
+EOF
+		fi
 
 # Main Nginx Server Block Config
 cat <<EOF
@@ -230,6 +237,9 @@ while getopts ":hd:s:n::ef" OPTION; do
             ;;
         f)
             ForceOverwrite=1
+            ;;
+        r)
+            RedirectHttps=1
             ;;
         *)
             show_usage
