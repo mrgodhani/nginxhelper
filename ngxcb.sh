@@ -157,9 +157,9 @@ cat <<EOF
 
         include h5bp/directive-only/ssl.conf;
 
-        ssl on;
-        ssl_certificate     /etc/letsencrypt/live/$ServerName/fullchain.pem;
-        ssl_certificate_key /etc/letsencrypt/live/$ServerName/privkey.pem;
+        #ssl on;
+        #ssl_certificate     /etc/letsencrypt/live/$ServerName/fullchain.pem;
+        #ssl_certificate_key /etc/letsencrypt/live/$ServerName/privkey.pem;
 
         root $DocumentRoot;
         index index.html index.htm index.php app.php app_dev.php;
