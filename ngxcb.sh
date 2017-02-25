@@ -14,6 +14,7 @@ Assumes /etc/nginx/sites-available and /etc/nginx/sites-enabled setup used.
     -h    Help - Show this menu.
     -n    The Server Block file name - default: vagrant - i.e. -n yoursite
     -s    ServerName - i.e. -s yoursite.com
+    -r    Redirect 301 permanent to HTTPS - i,e -r (without any value)
 
 EOF
 exit 1
@@ -39,8 +40,18 @@ function create_server_block {
     # Default empty PHP Config
     PHP_NO_SSL=""
     PHP_WITH_SSL=""
+    REDIRECT_SSL=""
+
 
     if [[ $PHP_IS_INSTALLED -eq 0 ]]; then
+
+			if [[RedirectHttps -eq 1]]; then
+
+read -d '' REDIRECT_SSL <<EOF
+	return 301 https://$server_name$request_uri;
+EOF
+
+			fi
 
 # Nginx Server Block config for PHP (without using SSL)
 read -d '' PHP_NO_SSL <<EOF
@@ -124,6 +135,7 @@ cat <<EOF
 
         root $DocumentRoot;
         index index.html index.htm index.php app.php app_dev.php;
+        $REDIRECT_SSL
 
         # Make site accessible from ...
         server_name $ServerName;
@@ -227,6 +239,9 @@ while getopts ":hd:s:n::ef" OPTION; do
             ;;
         f)
             ForceOverwrite=1
+            ;;
+        r)
+            RedirectHttps=1
             ;;
         *)
             show_usage
