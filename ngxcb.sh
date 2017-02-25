@@ -137,6 +137,7 @@ cat <<EOF
 
         # Make site accessible from ...
         server_name $ServerName;
+        $REDIRECT_SSL
 
         access_log /usr/share/nginx/logs/access.log;
         error_log  /usr/share/nginx/logs/error.log error;
