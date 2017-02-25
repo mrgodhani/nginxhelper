@@ -122,7 +122,7 @@ EOF
 
 		if [[ $RedirectHttps -eq 1 ]]; then
 read -d '' REDIRECT_SSL <<EOF
-	return 301 https://$server_name$request_uri;
+	return 301 https://\$server_name\$request_uri;
 EOF
 		fi
 
