@@ -45,14 +45,6 @@ function create_server_block {
 
     if [[ $PHP_IS_INSTALLED -eq 0 ]]; then
 
-			if [[ $RedirectHttps -eq 1 ]]; then
-
-read -d '' REDIRECT_SSL <<EOF
-	return 301 https://$server_name$request_uri;
-EOF
-
-			fi
-
 # Nginx Server Block config for PHP (without using SSL)
 read -d '' PHP_NO_SSL <<EOF
         # pass the PHP scripts to php5-fpm
@@ -126,6 +118,15 @@ read -d '' PHP_WITH_SSL <<EOF
         }
 EOF
     fi
+
+
+		if [[ $RedirectHttps -eq 1 ]]; then
+
+read -d '' REDIRECT_SSL <<EOF
+	return 301 https://$server_name$request_uri;
+EOF
+
+		fi
 
 # Main Nginx Server Block Config
 cat <<EOF
