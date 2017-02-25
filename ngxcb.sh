@@ -45,7 +45,7 @@ function create_server_block {
 
     if [[ $PHP_IS_INSTALLED -eq 0 ]]; then
 
-			if [[ $RedirectHttps -eq 1]]; then
+			if [[ $RedirectHttps -eq 1 ]]; then
 
 read -d '' REDIRECT_SSL <<EOF
 	return 301 https://$server_name$request_uri;
