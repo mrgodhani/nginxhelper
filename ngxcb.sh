@@ -218,7 +218,7 @@ ForceOverwrite=0
 # - Run it in "silence"-mode by starting with a ":"
 # - Single ":" after an argument means "required"
 # - Double ":" after an argument means "optional"
-while getopts ":hd:s:n::ef" OPTION; do
+while getopts ":hd:s:n::efr" OPTION; do
     case $OPTION in
         h)
             show_usage
